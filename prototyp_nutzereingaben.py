@@ -1,6 +1,7 @@
 import json
 import os
 from tkinter import *
+import re
 
 class Kunde:
     def __init__(self,vorname,nachname,geburtsdatum,email,wohnort):
@@ -10,20 +11,30 @@ class Kunde:
         self.email = email
         self.wohnort = wohnort
 
+def is_valid_email(email):
+    # Verwendet eine einfache Regular Expression, um die Gültigkeit der E-Mail-Adresse zu überprüfen
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
 def button_action():
-    kunde = Kunde(vorname.get(), nachname.get(), gebDatum.get(), mail.get(), ort.get())
-    if os.path.isfile("Kundendaten.json"):
-        with open("Kundendaten.json","a") as appender:
-            json.dump(kunde.__dict__,appender)
+    email_input = mail.get()
+    if is_valid_email(email_input):
+        kunde = Kunde(vorname.get(), nachname.get(), gebDatum.get(), email_input, ort.get())
+        if os.path.isfile("Kundendaten.json"):
+            with open("Kundendaten.json", "a") as appender:
+                json.dump(kunde.__dict__, appender)
+                appender.write("\n")  # Fügt eine Zeilenumbruch für jeden Kunden hinzu
+        else:
+            with open("Kundendaten.json", "w") as writer:
+                json.dump(kunde.__dict__, writer)
+        message_label.config(text="Ein neuer Kunde wurde hinzugefügt")
+        vorname.delete(0, END)
+        nachname.delete(0, END)
+        gebDatum.delete(0, END)
+        mail.delete(0, END)
+        ort.delete(0, END)
     else:
-        with open("Kundendaten.json", "w") as writer:
-            json.dump(kunde.__dict__, writer)
-    message_label.config(text="Ein neuer Kunde wurde hinzugefügt")
-    vorname.delete(0,END)
-    nachname.delete(0, END)
-    gebDatum.delete(0, END)
-    mail.delete(0, END)
-    ort.delete(0, END)
+        message_label.config(text="Ungültige E-Mail-Adresse. Bitte erneut eingeben.")
 
 
 # fenster erstellen
