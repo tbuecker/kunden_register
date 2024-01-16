@@ -19,6 +19,11 @@ def button_action():
         with open("Kundendaten.json", "w") as writer:
             json.dump(kunde.__dict__, writer)
     message_label.config(text="Ein neuer Kunde wurde hinzugefügt")
+    vorname.delete(0,END)
+    nachname.delete(0, END)
+    gebDatum.delete(0, END)
+    mail.delete(0, END)
+    ort.delete(0, END)
 
 
 # fenster erstellen
