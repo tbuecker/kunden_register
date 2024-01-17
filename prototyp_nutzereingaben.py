@@ -20,7 +20,7 @@ class Kunde:
 
 def is_valid_email(email):
     # Verwendet eine einfache Regular Expression, um die Gültigkeit der E-Mail-Adresse zu überprüfen
-    pattern = r'^[a-zA-Z0-9ß][a-zA-Z0-9ß._-]*[a-zA-Z0-9ß]@[a-zA-Z0-9ß.-]+\.[a-zA-Z]{2,}$'
+    pattern = r'^[a-zA-Z0-9ß][a-zA-Z0-9ß._-]*@[a-zA-Z0-9ß.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
 
 def is_valid_date(date):
