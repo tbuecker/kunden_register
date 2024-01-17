@@ -5,9 +5,6 @@ import re
 import subprocess
 
 class Kunde:
-    # Eine Klassenvariable für die ID-Zählung
-    id_counter = 1
-
     def __init__(self, vorname, nachname, geburtsdatum, email, wohnort):
         # Verwendung der ID-Zählung für jede Instanz
         self.id = Kunde.id_counter

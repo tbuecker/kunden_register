@@ -28,7 +28,7 @@ def suchen_button_action():
                 (not ort_input or customer_data.get("wohnort") == ort_input)
             ):
                 # Hier werden die gefundenen Kundendaten ausgegeben
-                print(f"Gefundener Kunde: {customer_data}")
+                print(type(f"Gefundener Kunde: {customer_data}"))
 
 
 suchfenster = Tk()
