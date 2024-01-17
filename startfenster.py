@@ -3,7 +3,7 @@ import subprocess
 
 def anlegen_button_action():
     startfenster.destroy()
-    anlegen_path = "./kundeneingabe.py"
+    anlegen_path = "eingabefenster.py"
     subprocess.run(["python", anlegen_path])
 
 def suchen_button_action():
