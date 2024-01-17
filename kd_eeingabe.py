@@ -2,17 +2,14 @@ import json
 import os
 from tkinter import *
 import re
-import subprocess
+from tkinter import messagebox
 
 class Kunde:
-    # Eine Klassenvariable für die ID-Zählung
     id_counter = 1
 
     def __init__(self, vorname, nachname, geburtsdatum, email, wohnort):
-        # Verwendung der ID-Zählung für jede Instanz
         self.id = Kunde.id_counter
         Kunde.id_counter += 1
-
         self.vorname = vorname
         self.nachname = nachname
         self.geburtsdatum = geburtsdatum
@@ -20,21 +17,17 @@ class Kunde:
         self.wohnort = wohnort
 
 def is_valid_email(email):
-    # Verwendet eine einfache Regular Expression, um die Gültigkeit der E-Mail-Adresse zu überprüfen
     pattern = r'^[a-zA-Z0-9ß][a-zA-Z0-9ß._-]*@[a-zA-Z0-9ß.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
 
 def is_valid_date(date):
-    # Überprüft das Datumsformat "dd.mm.yyyy"
     date_pattern = r'^\d{2}\.\d{2}.\d{4}$'
     return re.match(date_pattern, date) is not None
 
 def is_valid_name(name):
-    # Überprüft, ob der Name nur Buchstaben enthält
     return name.isalpha()
 
 def is_email_unique(email):
-    # Überprüft, ob die eingegebene E-Mail schon vorhanden ist
     if os.path.isfile("Kundendaten.json"):
         with open("Kundendaten.json", "r",  encoding="utf-8") as reader:
             for line in reader:
@@ -44,7 +37,6 @@ def is_email_unique(email):
     return True
 
 def get_last_id():
-    # Funktion, um die zuletzt vergebene ID aus der Datei zu erhalten
     last_id = 0
     if os.path.isfile("Kundendaten.json"):
         with open("Kundendaten.json", "r", encoding="utf-8") as file:
@@ -55,8 +47,7 @@ def get_last_id():
 
 def back_button_action():
     eingabefenster.destroy()
-    start_path = "./startfenster.py"
-    subprocess.run(["python", start_path])
+    messagebox.showinfo("Zurück", "Zurücktaste wurde gedrückt!")
 
 def anlegen_button_action():
     email_input = mail_eingabe.get()
@@ -73,7 +64,6 @@ def anlegen_button_action():
         is_valid_name(ort_input) and
         is_email_unique(email_input)
     ):
-        # Erhalte die zuletzt vergebene ID und setze die ID-Zählung fort
         last_id = get_last_id()
         Kunde.id_counter = last_id + 1
 
@@ -89,60 +79,42 @@ def anlegen_button_action():
         ort_eingabe.delete(0, END)
     else:
         if not is_valid_email(email_input):
-            message_label.config(text="Ungültige E-Mail-Adresse. Bitte erneut eingeben.")
+            messagebox.showwarning("Ungültige E-Mail-Adresse", "Ungültige E-Mail-Adresse. Bitte erneut eingeben.")
         elif not is_valid_date(geburtsdatum_input):
-            message_label.config(text="Ungültiges Geburtsdatum. Bitte im Format dd.mm.yyyy eingeben.")
+            messagebox.showwarning("Ungültiges Geburtsdatum", "Ungültiges Geburtsdatum. Bitte im Format dd.mm.yyyy eingeben.")
         elif not is_valid_name(vorname_input):
-            message_label.config(text="Ungültiger Vorname. Bitte nur Buchstaben verwenden.")
+            messagebox.showwarning("Ungültiger Vorname", "Ungültiger Vorname. Bitte nur Buchstaben verwenden.")
         elif not is_valid_name(nachname_input):
-            message_label.config(text="Ungültiger Nachname. Bitte nur Buchstaben verwenden.")
+            messagebox.showwarning("Ungültiger Nachname", "Ungültiger Nachname. Bitte nur Buchstaben verwenden.")
         elif not is_valid_name(ort_input):
-            message_label.config(text="Ungültiger Wohnort. Bitte nur Buchstaben verwenden.")
+            messagebox.showwarning("Ungültiger Wohnort", "Ungültiger Wohnort. Bitte nur Buchstaben verwenden.")
         elif not is_email_unique(email_input):
-            message_label.config(text="Die E-Mail-Adresse wird bereits verwendet. Bitte eine andere verwenden.")
+            messagebox.showwarning("Doppelte E-Mail-Adresse", "Die E-Mail-Adresse wird bereits verwendet. Bitte eine andere verwenden.")
 
-
-
-
-
-
-# fenster erstellen
+# Fenster erstellen
 eingabefenster = Tk()
 eingabefenster.geometry("500x300")
 eingabefenster.title("Kunden Eingabe")
 
-vorname_label = Label(eingabefenster,text="Vorname : ")
-vorname_label.place(x=20, y=20, width= 100 , height= 20)
-vorname_eingabe=Entry(eingabefenster, bd=2)
-vorname_eingabe.place(x=100, y=20, width=380, height= 20 )
+# Entry-Felder und Labels erstellen
+labels = ["Vorname", "Nachname", "Geburtsdatum", "E-Mail", "Wohnort"]
+entries = []
 
-nachname_label = Label(eingabefenster,text="Nachname : ")
-nachname_label.place(x=20, y=60, width= 100 , height= 20)
-nachname_eingabe=Entry(eingabefenster, bd=2)
-nachname_eingabe.place(x=120, y=60, width=380, height= 20 )
+for i, label_text in enumerate(labels):
+    label = Label(eingabefenster, text=f"{label_text} : ")
+    label.place(x=20, y=20 + 40 * i, width=100, height=20)
+    entry = Entry(eingabefenster, bd=2)
+    entry.place(x=120, y=20 + 40 * i, width=380, height=20)
+    entries.append(entry)
 
-geburtsdatum_label = Label(eingabefenster,text="Geburtsdatum : ")
-geburtsdatum_label.place(x=20, y=100, width= 100 , height= 20)
-geburtsdatum_eingabe=Entry(eingabefenster, bd=2)
-geburtsdatum_eingabe.place(x=100, y=100, width=380, height= 20 )
+# Anlegen-Button und zurück-Button erstellen
+anlegen_button = Button(eingabefenster, text="Als neuen Kunden anlegen", command=anlegen_button_action)
+anlegen_button.place(x=100, y=220, width=380, height=20)
 
-mail_label = Label(eingabefenster,text="E-Mail : ")
-mail_label.place(x=20, y=140, width= 100 , height= 20)
-mail_eingabe=Entry(eingabefenster, bd=2)
-mail_eingabe.place(x=100, y=140, width=380, height= 20 )
+message_label = Label(eingabefenster, text="")
+message_label.place(x=100, y=260, width=380, height=20)
 
-ort_label = Label(eingabefenster,text="Wohnort : ")
-ort_label.place(x=20, y=180, width= 100 , height= 20)
-ort_eingabe=Entry(eingabefenster, bd=2)
-ort_eingabe.place(x=100, y=180, width=380, height= 20 )
-
-anlegen_button = Button(eingabefenster, text=" Als neuen Kunden anlegen ", command = anlegen_button_action)
-anlegen_button.place(x=100,y=220,width=380,height=20)
-
-message_label = Label(eingabefenster,text="")
-message_label.place(x=100,y=260,width=380,height=20)
-
-back_button = Button(eingabefenster,text="<-Zurück", command=back_button_action)
-back_button.place(x=20, y=220, width= 70 , height= 20)
+back_button = Button(eingabefenster, text="<- Zurück", command=back_button_action)
+back_button.place(x=20, y=220, width=70, height=20)
 
 eingabefenster.mainloop()
