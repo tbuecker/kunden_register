@@ -3,6 +3,7 @@ import os
 from tkinter import *
 import re
 import subprocess
+from datetime import datetime
 
 class Kunde:
     def __init__(self, vorname, nachname, geburtsdatum, email, wohnort):
@@ -18,13 +19,23 @@ class Kunde:
 
 def is_valid_email(email):
     # Verwendet eine einfache Regular Expression, um die Gültigkeit der E-Mail-Adresse zu überprüfen
-    pattern = r'[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*@[a-zA-Z0-9ß]*[.-_]?[a-zA-Z0-9ß]*\.[a-zA-Z0-9ß]{2,}'
+    pattern = r'[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]@[a-zA-Z0-9ß]+[._-]?[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*\.[a-zA-Z0-9ß]{2,}$'
     return re.match(pattern, email) is not None
 
 def is_valid_date(date):
-    # Überprüft das Datumsformat "dd.mm.yyyy"
+    # Überprüft das Datumsformat "dd.mm.yyyy" und stellt sicher, dass es nicht in der Zukunft liegt
     date_pattern = r'^\d{2}\.\d{2}.\d{4}$'
-    return re.match(date_pattern, date) is not None
+
+    if re.match(date_pattern, date) is not None:
+        # Das Datum hat das richtige Format, überprüfe, ob es in der Zukunft liegt
+        day, month, year = map(int, date.split('.'))
+        input_date = datetime(year, month, day)
+        current_date = datetime.now()
+
+        return input_date <= current_date  # Änderung hier: <= statt >=
+    else:
+        # Das Datum hat nicht das richtige Format
+        return False
 
 def is_valid_name(name):
     # Überprüft, ob der Name nur Buchstaben enthält
@@ -88,7 +99,8 @@ def anlegen_button_action():
         if not is_valid_email(email_input):
             message_label.config(text="Ungültige E-Mail-Adresse. Bitte erneut eingeben.")
         elif not is_valid_date(geburtsdatum_input):
-            message_label.config(text="Ungültiges Geburtsdatum. Bitte im Format dd.mm.yyyy eingeben.")
+            message_label.config(text="Ungültiges Geburtsdatum. "
+                                      "\nFalsches format (dd.mm.yyyy) oder das Datum liegt in der Zukunft.")
         elif not is_valid_name(vorname_input):
             message_label.config(text="Ungültiger Vorname. Bitte nur Buchstaben verwenden.")
         elif not is_valid_name(nachname_input):
@@ -111,38 +123,38 @@ eingabefenster.title("Kunden Eingabe")
 vorname_label = Label(eingabefenster,text="Vorname : ", anchor="w", justify=LEFT)
 vorname_label.place(x=20, y=20, width= 100 , height= 20)
 vorname_eingabe=Entry(eingabefenster, bd=2)
-vorname_eingabe.insert(0, "Falco")
+vorname_eingabe.insert(0, "Max")
 vorname_eingabe.place(x=110, y=20, width=370, height= 20 )
 
 nachname_label = Label(eingabefenster,text="Nachname : ", anchor="w", justify=LEFT)
 nachname_label.place(x=20, y=60, width= 100 , height= 20)
 nachname_eingabe=Entry(eingabefenster, bd=2)
-nachname_eingabe.insert(0, "Kunath")
+nachname_eingabe.insert(0, "Mustermann")
 nachname_eingabe.place(x=110, y=60, width=370, height= 20 )
 
 geburtsdatum_label = Label(eingabefenster,text="Geburtsdatum : ", anchor="w", justify=LEFT)
 geburtsdatum_label.place(x=20, y=100, width= 100 , height= 20)
 geburtsdatum_eingabe=Entry(eingabefenster, bd=2)
-geburtsdatum_eingabe.insert(0, "15.04.2017")
+geburtsdatum_eingabe.insert(0, "01.01.1970")
 geburtsdatum_eingabe.place(x=110, y=100, width=370, height= 20 )
 
 mail_label = Label(eingabefenster,text="E-Mail : ", anchor="w", justify=LEFT)
 mail_label.place(x=20, y=140, width= 100 , height= 20)
 mail_eingabe=Entry(eingabefenster, bd=2)
-mail_eingabe.insert(0, "f.k@g.com")
+mail_eingabe.insert(0, "Max.Mustermann@max.mu")
 mail_eingabe.place(x=110, y=140, width=370, height= 20 )
 
 ort_label = Label(eingabefenster,text="Wohnort : ", anchor="w", justify=LEFT)
 ort_label.place(x=20, y=180, width= 100 , height= 20)
 ort_eingabe=Entry(eingabefenster, bd=2)
-ort_eingabe.insert(0, "trebeltal")
+ort_eingabe.insert(0, "Musterstadt")
 ort_eingabe.place(x=110, y=180, width=370, height= 20 )
 
 anlegen_button = Button(eingabefenster, text=" Als neuen Kunden anlegen ", command = anlegen_button_action)
 anlegen_button.place(x=100,y=220,width=380,height=20)
 
 message_label = Label(eingabefenster,text="")
-message_label.place(x=110,y=260,width=370,height=20)
+message_label.place(x=110,y=260,width=370,height=40)
 
 back_button = Button(eingabefenster,text="<-Zurück", command=back_button_action)
 back_button.place(x=20, y=220, width= 70 , height= 20)

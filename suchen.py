@@ -14,7 +14,14 @@ def suchen_button_action():
     geburtsdatum_input = kunden_geburtsdatum_eingabe.get()
     mail_input = kunden_mail_eingabe.get()
     ort_input = kunden_ort_eingabe.get()
-    id_input = int(kunden_id_eingabe.get())
+    id_input_str = kunden_id_eingabe.get()
+
+    # Überprüfen, ob die Eingabe für die Kunden-ID nicht leer ist
+    if id_input_str:
+        id_input = int(id_input_str)
+    else:
+        # Handle den Fall, wenn die Eingabe leer ist (z.B. setze id_input auf None)
+        id_input = None
 
     with open("Kundendaten.json", "r", encoding="utf-8") as file:
         for line in file:
@@ -27,7 +34,7 @@ def suchen_button_action():
                 (not geburtsdatum_input or customer_data.get("geburtsdatum") == geburtsdatum_input) and
                 (not mail_input or customer_data.get("email") == mail_input) and
                 (not ort_input or customer_data.get("wohnort") == ort_input) and
-                (not id_input or customer_data.get("id") == id_input)
+                (id_input is None or customer_data.get("id") == id_input)
             ):
                 # Hier werden die gefundenen Kundendaten ausgegeben
                 #print(type(f"Gefundener Kunde: {customer_data}"))
