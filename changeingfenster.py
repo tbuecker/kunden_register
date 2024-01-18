@@ -20,7 +20,7 @@ class Kunde:
 
 def is_valid_email(email):
     # Verwendet eine einfache Regular Expression, um die Gültigkeit der E-Mail-Adresse zu überprüfen
-    pattern = r'[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*@[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*\.[a-zA-Z0-9ß]{2,}'
+    pattern = r'[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]@[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*[._-]?[a-zA-Z0-9ß]*\.[a-zA-Z0-9ß]{2,}'
     return re.match(pattern, email) is not None
 
 def is_valid_date(date):
@@ -97,7 +97,7 @@ def change_button_action():
             message_label.config(text="Ungültiger Nachname. Bitte nur Buchstaben verwenden.")
         elif not is_valid_name(ort_input):
             message_label.config(text="Ungültiger Wohnort. Bitte nur Buchstaben verwenden.")
-
+    os.remove("searchassist.json")
 # Hier holt der Code die Kundendaten aus der searchassist.json-Datei
 with open("searchassist.json", "r", encoding="utf-8") as reader:
     ausgabedaten = json.load(reader)

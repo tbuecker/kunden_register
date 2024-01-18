@@ -1,0 +1,13 @@
+aufgaben:
+
+
+
+muss:
+doppelte namen finden und auflisten/dropdownauswahl
+
+muss:
+readme datei
+
+optional:
+optionale felder die frei bleiben dürfen ggf durch hinzufügen button
+
