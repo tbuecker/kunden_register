@@ -1,4 +1,4 @@
-# "KundenKompass - Die kluge Wahl für Kundenmanagement."
+# "KundenKompass - Die kluge Wahl für ihr Kundenmanagement."
 ein Projekt von Falco Kunath, Thomas Bücker und Fatih Zafer
 ### Kundendaten erfassen, suchen, bearbeiten und löschen.
 
