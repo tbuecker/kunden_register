@@ -1,4 +1,4 @@
-# Name des Produkts
+# "KundenKompass - Die kluge Wahl für Kundenmanagement."
 ein Projekt von Falco Kunath, Thomas Bücker und Fatih Zafer
 ### Kundendaten erfassen, suchen, bearbeiten und löschen.
 
