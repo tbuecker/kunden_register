@@ -74,7 +74,6 @@ def suchen_button_action():
             text=f"{num_matches} Treffer gefunden. Präzisiere deine Suche.")
 
 
-
 # Initialisieren des Suchfensters
 suchfenster = Tk()
 suchfenster.geometry("500x350")
