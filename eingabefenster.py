@@ -49,8 +49,8 @@ def is_valid_date(date):
 
 
 def is_valid_name(name):
-    # Überprüft, ob der Name nur Buchstaben enthält
-    return name.isalpha()
+    # Überprüft, ob der Name nur Buchstaben, -, und Leerzeichen enthält
+    return all(char.isalpha() or char in ['-', ' '] for char in name)
 
 
 def is_email_unique(email):
@@ -82,11 +82,11 @@ def back_button_action():
 
 
 def anlegen_button_action():
-    email_input = mail_eingabe.get()
-    geburtsdatum_input = geburtsdatum_eingabe.get()
-    vorname_input = vorname_eingabe.get()
-    nachname_input = nachname_eingabe.get()
-    ort_input = ort_eingabe.get()
+    email_input = mail_eingabe.get().strip()
+    geburtsdatum_input = geburtsdatum_eingabe.get().strip()
+    vorname_input = vorname_eingabe.get().strip()
+    nachname_input = nachname_eingabe.get().strip()
+    ort_input = ort_eingabe.get().strip()
 
     if (
         is_valid_email(email_input) and

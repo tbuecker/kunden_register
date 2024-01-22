@@ -43,7 +43,7 @@ def delete_button_action():
                 file.write("\n")
 
         message_label.config(text=f"{ausgabedaten['vorname']} "
-                                  f"{ausgabedaten['nachname']} "
+                                  f"\n{ausgabedaten['nachname']} "
                                   f"\nwurde gelöscht.")
         os.remove("searchassist.json")
 
@@ -53,7 +53,7 @@ with open("searchassist.json", "r", encoding="utf-8") as reader:
     ausgabedaten = json.load(reader)
 # Initialisieren des Ausgabefensters
 ausgabefenster = Tk()
-ausgabefenster.geometry("400x330")
+ausgabefenster.geometry("400x340")
 ausgabefenster.title("Kunden Ausgabe")
 # Erzeugen von Labels, Buttons und Eingabefeldern und deren Platzierung
 kunden_vorname_label = Label(ausgabefenster, text="Vorname : ", anchor="w",
@@ -114,7 +114,7 @@ exit_button = Button(ausgabefenster, text="Beenden",
 exit_button.place(x=260, y=260, width=100, height=20)
 
 message_label = Label(ausgabefenster, text=" ", anchor="w", justify=LEFT)
-message_label.place(x=260, y=280, width=100, height=40)
+message_label.place(x=260, y=280, width=100, height=60)
 delete_button = Button(ausgabefenster, text="Eintrag löschen",
                        command=delete_button_action, bg="red", fg="white")
 delete_button.place(x=130, y=300, width=100, height=20)
