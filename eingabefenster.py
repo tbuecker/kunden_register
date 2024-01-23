@@ -31,8 +31,8 @@ def is_valid_email(email):
 
 
 def is_valid_date(date):
-    # Überprüft das Datumsformat "dd.mm.yyyy" und stellt sicher,
-    # dass es nicht in der Zukunft liegt
+    # Überprüft das Datumsformat "dd.mm.yyyy" und
+    # stellt sicher, dass es nicht in der Zukunft liegt
     date_pattern = r'^\d{2}\.\d{2}.\d{4}$'
 
     if re.match(date_pattern, date) is not None:

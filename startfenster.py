@@ -39,5 +39,6 @@ beenden.place(x=20, y=60, width=100, height=20)
 beenden_button = Button(startfenster, text="Beenden",
                         command=startfenster.quit)
 beenden_button.place(x=140, y=60, width=340, height=20)
+
 # Funktion die auf Eingabe des Benutzers wartet
 startfenster.mainloop()

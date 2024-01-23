@@ -71,8 +71,8 @@ def change_button_action():
         is_valid_name(nachname_input) and
         is_valid_name(ort_input)
     ):
-        # Überprüfe, ob die Datei existiert und bearbeite den Datensatz
-        # mit der entsprechenden ID
+        # Überprüfe, ob die Datei existiert und
+        # bearbeite den Datensatz mit der entsprechenden ID
         if os.path.isfile("Kundendaten.json"):
             with open("Kundendaten.json", "r", encoding="utf-8") as file:
                 kunden_daten = [json.loads(line) for line in file]

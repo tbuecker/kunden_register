@@ -55,6 +55,7 @@ with open("searchassist.json", "r", encoding="utf-8") as reader:
 ausgabefenster = Tk()
 ausgabefenster.geometry("400x340")
 ausgabefenster.title("Kunden Ausgabe")
+
 # Erzeugen von Labels, Buttons und Eingabefeldern und deren Platzierung
 kunden_vorname_label = Label(ausgabefenster, text="Vorname : ", anchor="w",
                              justify=LEFT)
