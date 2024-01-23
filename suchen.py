@@ -124,5 +124,6 @@ back_button.place(x=30, y=260, width=70, height=20)
 
 message_label = Label(suchfenster, text=" ", anchor="w", justify=LEFT)
 message_label.place(x=150, y=280, width=300, height=40)
+
 # Funktion die auf Eingabe des Benutzers wartet
 suchfenster.mainloop()
